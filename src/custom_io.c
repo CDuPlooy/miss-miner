@@ -55,3 +55,13 @@ short bufferToFile( uchar *buffer , off_t size , char *filename){
 short compoundFileToFile( compound_file *cf , char *filename ){
 		return bufferToFile(cf->buffer , cf->size , filename);
 }
+
+void destroyCompoundFile( compound_file *cf ){
+	for(off_t i = 0 ; i < cf->size ; i++)
+		cf->buffer[i] = 0;
+	free(cf->buffer);
+	cf->buffer = NULL;
+	cf->size = 0;
+	free(cf);
+	cf = NULL;
+}

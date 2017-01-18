@@ -23,4 +23,5 @@ typedef struct cf{
 compound_file *fileToBuffer( char *filename );
 short bufferToFile( uchar *buffer , off_t size , char *filename);
 short compoundFileToFile( compound_file *cf , char *filename );
+void destroyCompoundFile( compound_file *cf );
 #endif
