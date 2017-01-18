@@ -24,7 +24,7 @@ cavelist *getCaves( compound_file *cf ){	//TODO: Return a structure for error ch
 			current_cl->end = i;
 			//Allocate a new structure.
 			current_cl->next = malloc(sizeof(cavelist));
-			if(!current_cl)
+			if(!current_cl->next)
 				break;
 			current_cl = current_cl->next;
 			injectState = INJECT_STATE_NONE;

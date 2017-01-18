@@ -1,6 +1,6 @@
 CC=clang
 STD=c11
-FLAGS=-Wall -Werror
+FLAGS=-Wall -Werror -O0 -ggdb
 
 compile: custom_io inject
 	$(CC) --std=$(STD) $(FLAGS)  src/miss-miner.c build/custom_io.o build/inject.o -o build/a.out
