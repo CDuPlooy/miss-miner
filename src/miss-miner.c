@@ -17,7 +17,7 @@ int main(int argc , char **argv){
 		printf("Cave:\nStart\t%zu\nEnd\t%zu\n",current->start,current->end);
 		current = current->next;
 	}
-	// freeCaves(cl);
+	freeCaves(cl);
 	destroyCompoundFile(cf);
 	return 0;
 }

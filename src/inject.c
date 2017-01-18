@@ -20,7 +20,7 @@ cavelist *getCaves( compound_file *cf ){	//TODO: Return a structure for error ch
 			current_cl->start = i;
 			injectState = INJECT_STATE_PARSING;
 		}
-		else if( cf->buffer[i] != 0 && injectState == INJECT_STATE_PARSING && injectState ){
+		else if( cf->buffer[i] != 0 && injectState == INJECT_STATE_PARSING ){
 			current_cl->end = i;
 			//Allocate a new structure.
 			current_cl->next = malloc(sizeof(cavelist));
@@ -32,7 +32,7 @@ cavelist *getCaves( compound_file *cf ){	//TODO: Return a structure for error ch
 	}
 	if(injectState == INJECT_STATE_PARSING)
 		current_cl->end = i;
-
+	current_cl->next = NULL; //Might be redundant if used outside of the upper if.
 
 	return cl;
 }
