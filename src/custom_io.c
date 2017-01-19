@@ -43,7 +43,7 @@ short bufferToFile( uchar *buffer , off_t size , char *filename){
 	if(!dst)
 		return CIOE_FILE_CREATION;
 
-	if(fwrite(buffer,size,1,dst) != size){
+	if(fwrite(buffer,sizeof(unsigned char),size,dst) != size){
 		fclose(dst);
 		return CIOE_FILE_WRITE;
 	}

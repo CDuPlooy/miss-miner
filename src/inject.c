@@ -56,3 +56,12 @@ cavelist *checkCaveList( cavelist *cl , size_t size ){
 		return current;
 	return NULL;
 }
+
+short injectShellcode(cavelist *cl , compound_file *cf_res , compound_file *cf_shellcode){
+	cavelist *cave = checkCaveList(cl,cf_shellcode->size + 2); // As to avoid corrupting NULL terminated strings.
+	if(!cave)
+		return 0;
+
+	memcpy((uchar *)cf_res->buffer + cave->start + 2 ,cf_shellcode->buffer,cf_shellcode->size);
+	return 1;
+}
