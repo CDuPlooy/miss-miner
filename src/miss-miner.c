@@ -5,12 +5,19 @@
 
 #include "../lib/custom_io.h"
 #include "../lib/inject.h"
+#include "../lib/map.h"
 
 char *target;
 char *shellcode;
 char *output;
 
 int main(int argc , char **argv){
+
+	basic_map *map = mapCreate();
+	printf("%i\n" , mapAdd(map, "key", argv[1]));
+	printf("%s\n",mapKeyLookup(map, "key"));
+	mapDestroy(map);
+	return 2;
 	compound_file *cf = fileToBuffer("test.bin");
 	if(!cf)
 		return 1;
