@@ -1,9 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 
 #include "../lib/custom_io.h"
 #include "../lib/inject.h"
+
+char *target;
+char *shellcode;
+char *output;
 
 int main(int argc , char **argv){
 	compound_file *cf = fileToBuffer("test.bin");
