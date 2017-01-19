@@ -13,5 +13,6 @@ typedef struct cl{
 
 //Functions
 cavelist *getCaves( compound_file *cf );
-void freeCaves(cavelist *cl);
+cavelist *checkCaveList( cavelist *cl , size_t size);
+void freeCaves(cavelist *cl );
 #endif

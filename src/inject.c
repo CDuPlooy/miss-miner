@@ -45,3 +45,14 @@ void freeCaves(cavelist *cl){
 	}
 	free(current);
 }
+cavelist *checkCaveList( cavelist *cl , size_t size ){
+	cavelist *current = cl;
+	while(current != NULL){
+		if(current->end - current->start > size )
+			return current;
+		current = current->next;
+	}
+	if(current->end - current->start > size )
+		return current;
+	return NULL;
+}
