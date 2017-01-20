@@ -1,6 +1,6 @@
 #include "../lib/custom_io.h"
 
-compound_file *fileToBuffer( char *filename ){
+compound_file *fileToBuffer( const char *filename ){
 	compound_file *cf = malloc(sizeof(compound_file));
 	if(!cf)
 		return NULL;
@@ -38,7 +38,7 @@ compound_file *fileToBuffer( char *filename ){
 		return NULL;
 }
 
-short bufferToFile( uchar *buffer , off_t size , char *filename){
+short bufferToFile( uchar *buffer , off_t size , const char *filename){
  	FILE *dst = fopen(filename,"wb");
 	if(!dst)
 		return CIOE_FILE_CREATION;
@@ -52,7 +52,7 @@ short bufferToFile( uchar *buffer , off_t size , char *filename){
 	return CIOE_OK;
 }
 
-short compoundFileToFile( compound_file *cf , char *filename ){
+short compoundFileToFile( compound_file *cf , const char *filename ){
 		return bufferToFile(cf->buffer , cf->size , filename);
 }
 

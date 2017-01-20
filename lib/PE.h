@@ -4,6 +4,8 @@
 #include <inttypes.h>
 #include <sys/types.h>
 #include <string.h>
+
+#include "DOS.h"
 // Structures
 
 typedef struct IMAGE_OPTIONAL_HEADER{

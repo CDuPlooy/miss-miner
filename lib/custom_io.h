@@ -20,8 +20,8 @@ typedef struct cf{
 #define CIOE_FILE_WRITE 2
 
 //Functions
-compound_file *fileToBuffer( char *filename );
-short bufferToFile( uchar *buffer , off_t size , char *filename);
-short compoundFileToFile( compound_file *cf , char *filename );
+compound_file *fileToBuffer( const char *filename );
+short bufferToFile( uchar *buffer , off_t size , const char *filename);
+short compoundFileToFile( compound_file *cf , const char *filename );
 void destroyCompoundFile( compound_file *cf );
 #endif
