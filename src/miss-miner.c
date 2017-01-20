@@ -19,7 +19,13 @@ int main(int argc , char **argv){
 		return 1;
 	IMAGE_DOS_HEADER *idh = (void *)cf->buffer;
 	IMAGE_NT_HEADER *inh = (void *)(cf->buffer + idh->e_lfanew);
-	printf("%x\n",inh->image_optional_header.baseOfCode);
+	PE_STRUCTURE pe;
+	pe.image_dos_header = idh;
+	pe.image_nt_header = inh;
+	pe.buffer = cf->buffer;
+	pe.size = cf->size;
+
+	printf("%x||%x\n",pe.image_nt_header->image_optional_header.checkSum, checksum(&pe));
 	destroyCompoundFile(cf);
 	return 0;
 }

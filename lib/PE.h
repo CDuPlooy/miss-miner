@@ -2,7 +2,8 @@
 #define PE_H
 // Includes
 #include <inttypes.h>
-
+#include <sys/types.h>
+#include <string.h>
 // Structures
 
 typedef struct IMAGE_OPTIONAL_HEADER{
@@ -59,8 +60,15 @@ typedef struct _IMAGE_NT_HEADER{
 	_IMAGE_OPTIONAL_HEADER image_optional_header;
 } IMAGE_NT_HEADER;
 
+typedef struct _PE_STRUCTURE{
+	struct _IMAGE_DOS_HEADER *image_dos_header;
+	struct _IMAGE_NT_HEADER *image_nt_header;
+	unsigned char *buffer;
+	off_t size;
+}PE_STRUCTURE;
 
-
+// Functions
+uint32_t pe_checksum(PE_STRUCTURE *pe); //Based on http://forum.sysinternals.com/optional-header-checksum-calculation_topic24214.html
 
 
 
