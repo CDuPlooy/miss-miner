@@ -15,11 +15,13 @@ char *shellcode;
 char *output;
 
 int main(int argc , char **argv){
-	PE_STRUCTURE *pe = loadPE("test.bin");
+	basic_map *args = mapCreate_fromParams(argc, argv);
+	if(!args)
+		return 1;
 
-	printf("%x||%x\n",pe->image_nt_header->image_optional_header.checkSum, pe_checksum(pe));
-	free(pe->buffer);
-	free(pe);
+	printf("%s\n",mapKeyLookup(args, "-param"));
+	printf("%s\n",mapKeyLookup(args, "-param2"));
 
+	mapDestroy(args);
 	return 0;
 }

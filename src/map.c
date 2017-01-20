@@ -48,3 +48,45 @@ char *mapValueLookup(basic_map *map, char *value){
 			return vVector_at(map->key, i);
 	return NULL;
 }
+
+basic_map *mapCreate_fromParams(int argc , char **argv){ // TODO: This should be written differently.
+	if(argc <= 1)
+		return NULL;
+
+	basic_map *map = mapCreate();
+	if(!map)
+		return NULL;
+
+	// We want to loop through the command line parameters mapping options.
+	// Any option which does not directly map to state is mapped to (NULL)
+
+	for(size_t i = 1 ; i < argc ; i+=2){
+		if(argv[i][0] == '-'){
+			if(i + 1 < argc){
+				if(argv[i+1][0] != '-'){
+					mapAdd(map, argv[i], argv[i+1]);
+				}
+				else{
+					mapAdd(map, argv[i], "(null)");
+					i--;
+				}
+			}
+		}
+	}
+	return map;
+}
+
+
+short _mapKeyExist(basic_map *map, char *key){
+	for( size_t i = 0 ; i < map->size ; i++ )
+		if(!strcmp(vVector_at(map->key, i),key))
+			return 1;
+	return 0;
+}
+
+short _mapValueExist(basic_map *map, char *value){
+	for( size_t i = 0 ; i < map->size ; i++ )
+		if(!strcmp(vVector_at(map->value, i),value))
+			return 1;
+	return 0;
+}
