@@ -6,37 +6,20 @@
 #include "../lib/custom_io.h"
 #include "../lib/inject.h"
 #include "../lib/map.h"
+#include "../lib/PE.h"
+#include "../lib/DOS.h"
 
 char *target;
 char *shellcode;
 char *output;
 
 int main(int argc , char **argv){
-
-	basic_map *map = mapCreate();
-	printf("%i\n" , mapAdd(map, "key", argv[1]));
-	printf("%s\n",mapKeyLookup(map, "key"));
-	mapDestroy(map);
-	return 2;
 	compound_file *cf = fileToBuffer("test.bin");
 	if(!cf)
 		return 1;
-	cavelist *cl = getCaves(cf);
-	if(!cl)
-		return 2;
-
-	compound_file *cf_shell = fileToBuffer("test.shell");
-	if(!cf_shell)
-		return 3;
-
-	if(!injectShellcode(cl , cf , cf_shell)){
-		puts("Could not inject the shellcode!");
-		return 4;
-	}
-
-	printf("Write Result %i\n",compoundFileToFile(cf,"test.injected.bin"));
-
-	freeCaves(cl);
+	IMAGE_DOS_HEADER *idh = (void *)cf->buffer;
+	IMAGE_NT_HEADER *inh = (void *)(cf->buffer + idh->e_lfanew);
+	printf("%x\n",inh->image_optional_header.baseOfCode);
 	destroyCompoundFile(cf);
 	return 0;
 }

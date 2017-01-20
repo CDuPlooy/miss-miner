@@ -20,4 +20,4 @@ vVector:
 ## END ##
 
 run:
-	build/a.out
+	@cd build && ./a.out
