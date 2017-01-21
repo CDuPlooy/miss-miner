@@ -31,7 +31,7 @@ struct _PE_STRUCTURE *loadPE_fromCompoundFile(compound_file *cf){
 	pe->image_nt_header = (void *)cf->buffer + pe->image_dos_header->e_lfanew;
 	pe->buffer = cf->buffer;
 	pe->size = cf->size;
-	
+
 	return pe;
 }
 

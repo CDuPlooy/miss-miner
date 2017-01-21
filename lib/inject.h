@@ -12,9 +12,13 @@ typedef struct cl{
 	struct cl *next;
 }cavelist;	//A linked list representing code caves.
 
+typedef struct inject_d{
+	off_t offset;
+}inject_data;
+
 //Functions
 cavelist *getCaves( compound_file *cf );
 cavelist *checkCaveList( cavelist *cl , size_t size);
 void freeCaves(cavelist *cl );
-short injectShellcode(cavelist *cl , compound_file *cf_res , compound_file *cf_shellcode);
+short injectShellcode(cavelist *cl , compound_file *cf_res , compound_file *cf_shellcode , inject_data *id);
 #endif
