@@ -18,5 +18,5 @@ typedef struct inject_d{
 }inject_data;
 
 
-short injectData(struct _PE_STRUCTURE *pe , compound_file *shellcode);
+short injectData(struct _PE_STRUCTURE *pe , struct _IMAGE_SECTION_HEADER **sections , compound_file *shellcode);
 #endif

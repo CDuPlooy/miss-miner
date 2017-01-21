@@ -68,7 +68,13 @@ int main(int argc , char **argv){
 		if(!sections)
 			return 1;
 
-		printf("%p\n",pe_map_to_buffer(pe, &(pe->image_dos_header->e_cp)));
+		compound_file *cf_shellcode = fileToBuffer(mapKeyLookup(args, "-shellcode"));
+		injectData(pe, sections, cf_shellcode);
+
+		bufferToFile(pe->buffer, pe->size, mapKeyLookup(args, "-output"));
+		destroyCompoundFile(cf_shellcode);
+		free(pe->buffer);
+		free(pe);
 
 		return 0;
 	}
