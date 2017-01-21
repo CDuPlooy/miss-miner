@@ -66,23 +66,8 @@ int main(int argc , char **argv){
 		compound_file *cf_target = fileToBuffer(target);
 		compound_file *cf_shellcode = fileToBuffer(shellcode);
 
-		cavelist *cl = getCaves(cf_target);
-		inject_data id;
-		injectShellcode(cl, cf_target, cf_shellcode,&id);
-		freeCaves(cl);
+		
 
-		PE_STRUCTURE *pe = loadPE_fromCompoundFile(cf_target);
-		long chksum = pe_checksum(pe);
-		printf("Target Checksum:\t0x%X\n",pe->image_nt_header->image_optional_header.checkSum);
-		printf("Calculated Checksum:\t0x%lX\n",chksum);
-		printf("Shellcode at:\t\t0x%lx\n",id.virtualAddress);
-		pe->image_nt_header->image_optional_header.checkSum = chksum;
-
-		compoundFileToFile(cf_target, output);
-		destroyCompoundFile(cf_shellcode);
-		destroyCompoundFile(cf_target);
-		free(pe);
-		mapDestroy(args);
 		return 0;
 	}
 

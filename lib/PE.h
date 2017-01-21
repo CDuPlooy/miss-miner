@@ -101,5 +101,4 @@ typedef struct _PE_STRUCTURE{
 // Functions
 uint32_t pe_checksum(PE_STRUCTURE *pe); //Based on http://forum.sysinternals.com/optional-header-checksum-calculation_topic24214.html
 
-
 #endif

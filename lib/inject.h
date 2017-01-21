@@ -2,6 +2,7 @@
 #define INJECT_GUARD
 //Includes
 #include "custom_io.h"
+#include "PE.h"
 #include <string.h>
 #include <sys/types.h>
 
@@ -16,10 +17,4 @@ typedef struct inject_d{
 	off_t offset;
 	off_t virtualAddress;
 }inject_data;
-
-//Functions
-cavelist *getCaves( compound_file *cf );
-cavelist *checkCaveList( cavelist *cl , size_t size);
-void freeCaves(cavelist *cl );
-short injectShellcode(cavelist *cl , compound_file *cf_res , compound_file *cf_shellcode , inject_data *id);
 #endif
