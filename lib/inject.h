@@ -14,6 +14,7 @@ typedef struct cl{
 
 typedef struct inject_d{
 	off_t offset;
+	off_t virtualAddress;
 }inject_data;
 
 //Functions

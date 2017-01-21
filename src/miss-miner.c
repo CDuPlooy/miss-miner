@@ -20,18 +20,28 @@ int main(int argc , char **argv){
 		return 1;
 
 	if(_mapKeyExist(args, "-showSections")){
-		// Try new things here
 		PE_STRUCTURE *pe = loadPE(mapKeyLookup(args, "-target"));
 		printf("Number of Sections:\t%u\n",pe->image_nt_header->image_file_header.numberOfSections);
 		uint32_t sizeOfheaders = pe->image_nt_header->image_optional_header.sizeOfHeaders;
 		printf("Header Size:\t\t%u\n",sizeOfheaders);
 		IMAGE_SECTION_HEADER *section = pe->image_section_header;
 		for(size_t i = 0 ; i < pe->image_nt_header->image_file_header.numberOfSections ;i++ ){
-			printf("\t\t[Section %lu - %s]\n",i+1,section->name);
+			printf("[Section %lu - %s]\n",i+1,section->name);
+			printf("\tCharacteristics\t\t0x%X\n",section->characteristics);
+			printf("\tSize\t\t\t0x%X\n",section->sizeOfRawData);
+			printf("\tVirtual Address\t\t0x%X\n",section->virtualAddress);
+			printf("\tPhysical Address\t0x%X\n",section->Misc.physicalAddress);
+
+
 			section = (struct _IMAGE_SECTION_HEADER *)(section->name + sizeof(struct _IMAGE_SECTION_HEADER));
 		}
-		mapDestroy(args);
-		return 0;
+
+		free(pe->buffer);
+		free(pe);
+	}
+
+	if(_mapKeyExist(args, "-showNT")){
+
 	}
 
 	if(_mapKeyExist(args, "-recheck")){
@@ -65,7 +75,7 @@ int main(int argc , char **argv){
 		long chksum = pe_checksum(pe);
 		printf("Target Checksum:\t0x%X\n",pe->image_nt_header->image_optional_header.checkSum);
 		printf("Calculated Checksum:\t0x%lX\n",chksum);
-		printf("Shellcode at:\t0x%lx\n",id.offset);
+		printf("Shellcode at:\t\t0x%lx\n",id.virtualAddress);
 		pe->image_nt_header->image_optional_header.checkSum = chksum;
 
 		compoundFileToFile(cf_target, output);
@@ -75,7 +85,6 @@ int main(int argc , char **argv){
 		mapDestroy(args);
 		return 0;
 	}
-
 
 	mapDestroy(args);
 	return 0;

@@ -61,7 +61,9 @@ short injectShellcode(cavelist *cl , compound_file *cf_res , compound_file *cf_s
 	cavelist *cave = checkCaveList(cl,cf_shellcode->size + 2); // As to avoid corrupting NULL terminated strings.
 	if(!cave)
 		return 0;
-	id->offset = (off_t)(cf_res->buffer + cave->start + 2);
+
+	id->offset =  (off_t)(cf_res->buffer + cave->start + 2);
+	id->virtualAddress = id->offset - (off_t)cf_res->buffer;
 	memcpy((void *)id->offset ,cf_shellcode->buffer,cf_shellcode->size);
 	return 1;
 }
