@@ -21,7 +21,7 @@ short injectData(struct _PE_STRUCTURE *pe , struct _IMAGE_SECTION_HEADER **secti
 				space++;
 				if(space == shellcode->size + 2){
 					memcpy(data + j - (space + 2), shellcode->buffer, shellcode->size);
-					printf("Injected shellcode at %p\n",pe_map_to_buffer(pe,data + j - (space + 2)));
+					printf("Injected shellcode at %p\n",pe_map_to_rva(pe,data + j - (space + 2)));
 					return 1;
 				}
 				state = INJECT_STATE_PARSING;

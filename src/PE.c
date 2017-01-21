@@ -47,3 +47,7 @@ struct _IMAGE_SECTION_HEADER **pe_sections(PE_STRUCTURE *pe){
 void *pe_map_to_buffer(PE_STRUCTURE *pe, void *addr){
 	return (void *)((void *)addr - (void *)pe->buffer);
 }
+
+void *pe_map_to_rva(PE_STRUCTURE *pe, void *addr){
+	return (void *)pe_map_to_buffer(pe, (void *)((void *)addr - (void *)pe->buffer + pe->image_nt_header->image_optional_header.baseOfCode));
+}
