@@ -23,4 +23,4 @@ PE:
 ## END ##
 
 run:
-	@cd build && ./a.out
+	@cd build && valgrind ./a.out -inject -target test.bin -output test.injected.bin -shellcode test.shell

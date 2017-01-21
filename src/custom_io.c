@@ -39,7 +39,7 @@ compound_file *fileToBuffer( const char *filename ){
 }
 
 short bufferToFile( uchar *buffer , off_t size , const char *filename){
- 	FILE *dst = fopen(filename,"wb");
+	FILE *dst = fopen(filename,"wb");
 	if(!dst)
 		return CIOE_FILE_CREATION;
 

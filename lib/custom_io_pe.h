@@ -22,4 +22,17 @@ struct _PE_STRUCTURE *loadPE(const char *filename){
 	return pe;
 }
 
+struct _PE_STRUCTURE *loadPE_fromCompoundFile(compound_file *cf){
+	struct _PE_STRUCTURE *pe = malloc(sizeof(struct _PE_STRUCTURE));
+	if(!pe)
+		return NULL;
+
+	pe->image_dos_header = (void *)cf->buffer;
+	pe->image_nt_header = (void *)cf->buffer + pe->image_dos_header->e_lfanew;
+	pe->buffer = cf->buffer;
+	pe->size = cf->size;
+	
+	return pe;
+}
+
 #endif
