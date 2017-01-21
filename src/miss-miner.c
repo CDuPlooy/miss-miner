@@ -19,6 +19,21 @@ int main(int argc , char **argv){
 	if(!args)
 		return 1;
 
+	if(_mapKeyExist(args, "-showSections")){
+		// Try new things here
+		PE_STRUCTURE *pe = loadPE(mapKeyLookup(args, "-target"));
+		printf("Number of Sections:\t%u\n",pe->image_nt_header->image_file_header.numberOfSections);
+		uint32_t sizeOfheaders = pe->image_nt_header->image_optional_header.sizeOfHeaders;
+		printf("Header Size:\t\t%u\n",sizeOfheaders);
+		IMAGE_SECTION_HEADER *section = pe->image_section_header;
+		for(size_t i = 0 ; i < pe->image_nt_header->image_file_header.numberOfSections ;i++ ){
+			printf("\t\t[Section %lu - %s]\n",i+1,section->name);
+			section = (struct _IMAGE_SECTION_HEADER *)(section->name + sizeof(struct _IMAGE_SECTION_HEADER));
+		}
+		mapDestroy(args);
+		return 0;
+	}
+
 	if(_mapKeyExist(args, "-recheck")){
 	PE_STRUCTURE *pe = loadPE(mapKeyLookup(args, "-target"));
 	long chksum = pe_checksum(pe);

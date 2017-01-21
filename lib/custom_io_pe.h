@@ -16,6 +16,7 @@ struct _PE_STRUCTURE *loadPE(const char *filename){
 
 	pe->image_dos_header = (void *)cf->buffer;
 	pe->image_nt_header = (void *)cf->buffer + pe->image_dos_header->e_lfanew;
+	pe->image_section_header = (void *)pe->image_nt_header + sizeof(IMAGE_NT_HEADER);
 	pe->buffer = cf->buffer;
 	pe->size = cf->size;
 	free(cf);
@@ -29,6 +30,7 @@ struct _PE_STRUCTURE *loadPE_fromCompoundFile(compound_file *cf){
 
 	pe->image_dos_header = (void *)cf->buffer;
 	pe->image_nt_header = (void *)cf->buffer + pe->image_dos_header->e_lfanew;
+	pe->image_section_header = (void *)pe->image_nt_header + sizeof(IMAGE_NT_HEADER);
 	pe->buffer = cf->buffer;
 	pe->size = cf->size;
 

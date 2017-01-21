@@ -6,7 +6,15 @@
 #include <string.h>
 
 #include "DOS.h"
+// Defines
+#define IMAGE_NUMBEROF_DIRECTORY_ENTRIES 16
+#define IMAGE_SIZEOF_SHORT_NAME 8
+
 // Structures
+typedef struct _IMAGE_DATA_DIRECTORY{
+	uint32_t VirtualAddress;
+	uint32_t Size;
+	}_IMAGE_DATA_DIRECTORY;
 
 typedef struct IMAGE_OPTIONAL_HEADER{
 	  uint16_t                magic;
@@ -39,11 +47,12 @@ typedef struct IMAGE_OPTIONAL_HEADER{
 	  uint32_t                sizeOfHeapCommit;
 	  uint32_t                loaderFlags;
 	  uint32_t                numberOfRvaAndSizes;
-	  void *image_data_directory;	//   IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
+	  _IMAGE_DATA_DIRECTORY dataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
 } _IMAGE_OPTIONAL_HEADER;
 
 typedef struct _IMAGE_FILE_HEADER _IMAGE_FILE_HEADER;
 typedef struct __IMAGE_OPTIONAL_HEADER __IMAGE_OPTIONAL_HEADER;
+
 
 typedef struct _IMAGE_FILE_HEADER{
 	uint16_t  machine;
@@ -62,16 +71,35 @@ typedef struct _IMAGE_NT_HEADER{
 	_IMAGE_OPTIONAL_HEADER image_optional_header;
 } IMAGE_NT_HEADER;
 
+
+typedef struct _IMAGE_SECTION_HEADER {
+  	  unsigned char  name[IMAGE_SIZEOF_SHORT_NAME];
+  	   union {
+		    uint32_t physicalAddress;
+		    uint32_t virtualSize;
+	  } Misc;
+	  uint32_t virtualAddress;
+	  uint32_t sizeOfRawData;
+	  uint32_t pointerToRawData;
+	  uint32_t pointerToRelocations;
+	  uint32_t pointerToLinenumbers;
+	  uint16_t numberOfRelocations;
+	  uint16_t numberOfLinenumbers;
+	  uint32_t characteristics;
+} IMAGE_SECTION_HEADER;
+
 typedef struct _PE_STRUCTURE{
 	struct _IMAGE_DOS_HEADER *image_dos_header;
 	struct _IMAGE_NT_HEADER *image_nt_header;
+	struct _IMAGE_SECTION_HEADER *image_section_header;
 	unsigned char *buffer;
 	off_t size;
 }PE_STRUCTURE;
 
+
+
 // Functions
 uint32_t pe_checksum(PE_STRUCTURE *pe); //Based on http://forum.sysinternals.com/optional-header-checksum-calculation_topic24214.html
-
 
 
 #endif
