@@ -29,3 +29,21 @@ uint32_t pe_checksum(PE_STRUCTURE *pe){
 	cSum += pe->size;
 	return (cSum);
 }
+
+struct _IMAGE_SECTION_HEADER **pe_sections(PE_STRUCTURE *pe){
+	struct _IMAGE_SECTION_HEADER **sections = malloc(sizeof(struct IMAGE_SECTION_HEADER *) * pe->image_nt_header->image_file_header.numberOfSections);
+	if(!sections)
+		return NULL;
+
+		IMAGE_SECTION_HEADER *section = pe->image_section_header;
+		for(size_t i = 0 ; i < pe->image_nt_header->image_file_header.numberOfSections ;i++ ){
+			sections[i] = ( struct _IMAGE_SECTION_HEADER *)section;
+			section = (struct _IMAGE_SECTION_HEADER *)(section->name + sizeof(struct _IMAGE_SECTION_HEADER));
+		}
+
+	return sections;
+}
+
+void *pe_map_to_buffer(PE_STRUCTURE *pe, void *addr){
+	return (void *)((void *)addr - (void *)pe->buffer);
+}

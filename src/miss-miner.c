@@ -57,16 +57,18 @@ int main(int argc , char **argv){
 	return 0;
 	}
 
-	if(_mapKeyExist(args, "-inject")){
+	if(_mapKeyExist(args, "-inject")){ //TODO: Proper cleanup.
 		target = mapKeyLookup(args, "-target");
 		shellcode = mapKeyLookup(args, "-shellcode");
 		output = mapKeyLookup(args, "-output");
 
 		printf("Target: %s\nShellcode: %s\nOutput: %s\n",target,shellcode,output);
-		compound_file *cf_target = fileToBuffer(target);
-		compound_file *cf_shellcode = fileToBuffer(shellcode);
+		PE_STRUCTURE *pe = loadPE(mapKeyLookup(args, "-target"));
+		struct _IMAGE_SECTION_HEADER **sections = pe_sections(pe);
+		if(!sections)
+			return 1;
 
-		
+		printf("%p\n",pe_map_to_buffer(pe, &(pe->image_dos_header->e_cp)));
 
 		return 0;
 	}

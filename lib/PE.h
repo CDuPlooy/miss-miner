@@ -2,6 +2,7 @@
 #define PE_H
 // Includes
 #include <inttypes.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <string.h>
 
@@ -11,6 +12,11 @@
 #define IMAGE_SIZEOF_SHORT_NAME 8
 
 // Structures
+typedef struct sl{
+	off_t start;
+	off_t size;
+}sectionlist;
+
 typedef struct _IMAGE_DATA_DIRECTORY{
 	uint32_t VirtualAddress;
 	uint32_t Size;
@@ -100,5 +106,6 @@ typedef struct _PE_STRUCTURE{
 
 // Functions
 uint32_t pe_checksum(PE_STRUCTURE *pe); //Based on http://forum.sysinternals.com/optional-header-checksum-calculation_topic24214.html
-
+struct _IMAGE_SECTION_HEADER **pe_sections(PE_STRUCTURE *pe);
+void *pe_map_to_buffer(PE_STRUCTURE *pe, void *addr);
 #endif
