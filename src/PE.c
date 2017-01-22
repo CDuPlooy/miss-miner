@@ -48,6 +48,10 @@ void *pe_map_to_buffer(PE_STRUCTURE *pe, void *addr){
 	return (void *)((void *)addr - (void *)pe->buffer);
 }
 
-void *pe_map_to_rva(PE_STRUCTURE *pe, void *addr){
-	return (void *)pe_map_to_buffer(pe, (void *)((void *)addr - (void *)pe->buffer + pe->image_nt_header->image_optional_header.baseOfCode));
+off_t pe_map_to_file_offset(PE_STRUCTURE *pe , void *addr){
+	return (addr - (void*)(pe->buffer));
+}
+
+off_t pe_map_buffer_to_memoryEx(PE_STRUCTURE *pe, void *addr){
+	return pe->image_nt_header->image_optional_header.imageBase + pe_map_to_file_offset(pe, addr);
 }

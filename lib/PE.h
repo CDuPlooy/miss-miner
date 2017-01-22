@@ -108,5 +108,6 @@ typedef struct _PE_STRUCTURE{
 uint32_t pe_checksum(PE_STRUCTURE *pe); //Based on http://forum.sysinternals.com/optional-header-checksum-calculation_topic24214.html
 struct _IMAGE_SECTION_HEADER **pe_sections(PE_STRUCTURE *pe);
 void *pe_map_to_buffer(PE_STRUCTURE *pe, void *addr);
-void *pe_map_to_rva(PE_STRUCTURE *pe, void *addr);
+off_t pe_map_to_file_offset(PE_STRUCTURE *pe , void *addr);
+off_t pe_map_buffer_to_memoryEx(PE_STRUCTURE *pe, void *addr);
 #endif
