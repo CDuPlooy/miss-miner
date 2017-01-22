@@ -7,7 +7,7 @@
 #include <sys/types.h>
 
 //Defines
-#define INJECT_EXTRA_SPACE 16
+#define INJECT_EXTRA_SPACE 10
 
 //Typedefs
 typedef struct cl{
