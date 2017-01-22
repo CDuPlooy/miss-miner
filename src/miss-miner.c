@@ -79,9 +79,9 @@ int main(int argc , char **argv){
 
 
 		void *dst = pe->buffer + id.offset_in_file + cf_shellcode->size;
-		*(unsigned char *)(dst + sizeof(uint32_t)) = 0xe9;
-		*(unsigned char *)(dst + sizeof(uint32_t) + 1) = 0x0c;
-		*(uint32_t *)(dst) =pe_map_buffer_to_memoryEx(pe, pe->buffer + id.offset_in_file);
+		*(unsigned char *)(dst) = 0xe9;
+		*(unsigned char *)(dst + 1) = 0x0c;
+		*(uint32_t *)(dst + 2) =pe_map_buffer_to_memoryEx(pe, pe->buffer + id.offset_in_file);
 
 		printf("value %x\n",oldEntry + pe->image_nt_header->image_optional_header.imageBase);
 		bufferToFile(pe->buffer, pe->size, mapKeyLookup(args, "-output"));
