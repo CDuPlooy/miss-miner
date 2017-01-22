@@ -79,8 +79,8 @@ int main(int argc , char **argv){
 
 
 		void *dst = pe->buffer + id.offset_in_file + cf_shellcode->size;
-		*(unsigned char *)(dst) = 0xe9;
-		*(uint32_t *)(dst + sizeof(unsigned char)) = oldEntry + pe->image_nt_header->image_optional_header.imageBase;
+		*(unsigned char *)(dst + sizeof(uint32_t)) = 0xe9;
+		*(uint32_t *)(dst) = 0x98D5FDFF;
 
 		bufferToFile(pe->buffer, pe->size, mapKeyLookup(args, "-output"));
 		destroyCompoundFile(cf_shellcode);
