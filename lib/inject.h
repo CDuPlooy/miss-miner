@@ -6,6 +6,9 @@
 #include <string.h>
 #include <sys/types.h>
 
+//Defines
+#define INJECT_EXTRA_SPACE 16
+
 //Typedefs
 typedef struct cl{
 	off_t start;

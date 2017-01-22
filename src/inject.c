@@ -19,10 +19,10 @@ short injectData(struct _PE_STRUCTURE *pe , struct _IMAGE_SECTION_HEADER **secti
 		for(size_t j = 0 ; j < sections[i]->sizeOfRawData ; j++ ){ //pe->buffer + sections[n]->virtualAddress = position in buffer of the n'th pe section
 			if(*(char *)(data+j) == 0){
 				space++;
-				if(space == shellcode->size + 2){
-					memcpy(data + j - (space + 2), shellcode->buffer, shellcode->size);
-						id->offset_in_file = pe_map_to_file_offset(pe, data + j - space - 2);
-						id->position_in_memory = pe_map_buffer_to_memoryEx(pe, data + j - space - 2);
+				if(space == shellcode->size + INJECT_EXTRA_SPACE){
+					memcpy(data + j - (space + INJECT_EXTRA_SPACE), shellcode->buffer, shellcode->size);
+						id->offset_in_file = pe_map_to_file_offset(pe, data + j - space - INJECT_EXTRA_SPACE);
+						id->position_in_memory = pe_map_buffer_to_memoryEx(pe, data + j - space - INJECT_EXTRA_SPACE);
 
 					return 1;
 				}
