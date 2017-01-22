@@ -6,7 +6,7 @@
 #define INJECT_STATE_NONE 0
 #define INJECT_STATE_PARSING 1
 
-short injectData(struct _PE_STRUCTURE *pe , struct _IMAGE_SECTION_HEADER **sections , compound_file *shellcode){
+short injectData(struct _PE_STRUCTURE *pe , struct _IMAGE_SECTION_HEADER **sections , compound_file *shellcode , struct inject_d *id){
 	unsigned int nSections = pe->image_nt_header->image_file_header.numberOfSections;
 	size_t space;
 	// short state = INJECT_STATE_NONE;
@@ -21,8 +21,8 @@ short injectData(struct _PE_STRUCTURE *pe , struct _IMAGE_SECTION_HEADER **secti
 				space++;
 				if(space == shellcode->size + 2){
 					memcpy(data + j - (space + 2), shellcode->buffer, shellcode->size);
-						printf("Injected shellcode at offset 0x%lX in file.\n",pe_map_to_file_offset(pe, data + j - space - 2));
-						printf("Injected shellcode at offset 0x%lX in target memory after load.\n",pe_map_buffer_to_memoryEx(pe, data + j - space - 2));
+						id->offset_in_file = pe_map_to_file_offset(pe, data + j - space - 2);
+						id->position_in_memory = pe_map_buffer_to_memoryEx(pe, data + j - space - 2);
 
 					return 1;
 				}

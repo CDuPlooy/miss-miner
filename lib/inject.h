@@ -13,10 +13,10 @@ typedef struct cl{
 }cavelist;
 
 typedef struct inject_d{
-	off_t offset;
-	off_t virtualAddress;
+	off_t offset_in_file;
+	off_t position_in_memory;
 }inject_data;
 
 
-short injectData(struct _PE_STRUCTURE *pe , struct _IMAGE_SECTION_HEADER **sections , compound_file *shellcode);
+short injectData(struct _PE_STRUCTURE *pe , struct _IMAGE_SECTION_HEADER **sections , compound_file *shellcode , struct inject_d *id);
 #endif

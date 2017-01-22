@@ -69,7 +69,9 @@ int main(int argc , char **argv){
 			return 1;
 
 		compound_file *cf_shellcode = fileToBuffer(mapKeyLookup(args, "-shellcode"));
-		injectData(pe, sections, cf_shellcode);
+		inject_data id;
+		injectData(pe, sections, cf_shellcode,&id);
+		printf("Shellcode is at %lx\n",id.position_in_memory);
 
 		bufferToFile(pe->buffer, pe->size, mapKeyLookup(args, "-output"));
 		destroyCompoundFile(cf_shellcode);
