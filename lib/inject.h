@@ -2,6 +2,7 @@
 #define INJECT_GUARD
 //Includes
 #include "custom_io.h"
+#include "vVector.h"
 #include "PE.h"
 #include <string.h>
 #include <sys/types.h>
@@ -22,4 +23,5 @@ typedef struct inject_d{
 
 
 short injectData(struct _PE_STRUCTURE *pe , struct _IMAGE_SECTION_HEADER **sections , compound_file *shellcode , struct inject_d *id);
+vVector *getSections( struct _PE_STRUCTURE *pe );
 #endif

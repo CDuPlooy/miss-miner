@@ -1,6 +1,5 @@
 #include "../lib/inject.h"
 
-
 // Opaque types , Only this module needs to see them.
 
 #define INJECT_STATE_NONE 0
@@ -36,4 +35,19 @@ short injectData(struct _PE_STRUCTURE *pe , struct _IMAGE_SECTION_HEADER **secti
 	}
 
 	return 0;
+}
+
+vVector *getSections( struct _PE_STRUCTURE *pe ){
+	vVector *sections = vVector_init();
+	if(!sections)
+		return NULL;
+
+	IMAGE_SECTION_HEADER *section = pe->image_section_header;
+	for(size_t i = 0 ; i < pe->image_nt_header->image_file_header.numberOfSections ;i++ ){
+		//Add section
+		vVector_pushback(sections, section);
+		section = (struct _IMAGE_SECTION_HEADER *)(section->name + sizeof(struct _IMAGE_SECTION_HEADER));
+	}
+
+	return sections;
 }

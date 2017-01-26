@@ -21,21 +21,14 @@ int main(int argc , char **argv){
 
 	if(_mapKeyExist(args, "-showSections")){
 		PE_STRUCTURE *pe = loadPE(mapKeyLookup(args, "-target"));
-		printf("Number of Sections:\t%u\n",pe->image_nt_header->image_file_header.numberOfSections);
-		uint32_t sizeOfheaders = pe->image_nt_header->image_optional_header.sizeOfHeaders;
-		printf("Header Size:\t\t%u\n",sizeOfheaders);
-		IMAGE_SECTION_HEADER *section = pe->image_section_header;
-		for(size_t i = 0 ; i < pe->image_nt_header->image_file_header.numberOfSections ;i++ ){
-			printf("[Section %lu - %s]\n",i+1,section->name);
-			printf("\tCharacteristics\t\t0x%X\n",section->characteristics);
-			printf("\tSize\t\t\t0x%X\n",section->sizeOfRawData);
-			printf("\tVirtual Address\t\t0x%X\n",section->virtualAddress);
-			printf("\tPhysical Address\t0x%X\n",section->Misc.physicalAddress);
+		vVector *sections = getSections(pe);
+		for(size_t i = 0 ; i < sections->size ; i++){
+			struct _IMAGE_SECTION_HEADER *section = vVector_at(sections, i);
+			printf("Name:\t%s\n\tStart:\t0x%X\n\tEnd:\t0x%X\n", section->name, section->virtualAddress,section->virtualAddress + section->Misc.virtualSize);
 
-
-			section = (struct _IMAGE_SECTION_HEADER *)(section->name + sizeof(struct _IMAGE_SECTION_HEADER));
 		}
 
+		vVector_destroy(sections);
 		free(pe->buffer);
 		free(pe);
 	}
