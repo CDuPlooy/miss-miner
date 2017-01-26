@@ -1,16 +1,5 @@
 # miss-miner
-A hobbyist tool for injecting code into PE files.
-Reinventing the wheel is fun! :D
+miss-miner was a small project of mine just to see if I can understand the basics of shellcode injection programatically.
+As of 2017/01/26 the project will no longer be updated.
 
-# Usage:
-Inside the build directory try the following.
-
-````shell
-./a.out -inject -target test.bin -output test.injected.bin -shellcode test.shell
-````
-
-Miss-miner can also recalculate the checksum of portable executables.
-
-````shell
-./a.out -recheck -target test.injected.bin
-````
+It's been fun!
